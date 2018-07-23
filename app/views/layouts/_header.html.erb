@@ -1,0 +1,9 @@
+<header class = "navbar navbar-fixed-top navbar-inverse">
+    <% if user_signed_in? %>
+        <%= current_user.email %>
+        <%= link_to("Sign out", destroy_user_session_path, method: :delete) %>
+        <%= link_to("Builds", builds_path) %>
+    <% else %>
+        <%= link_to('Login', new_user_session_path)  %>  
+    <% end %>
+</header>

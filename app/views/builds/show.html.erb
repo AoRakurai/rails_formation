@@ -1,0 +1,23 @@
+<%= @build.user_id %>
+<% champion_info = champion_data(@build.champion) %>
+<% build_items = JSON.parse(@build.items) %>
+<% item_data = items_data %>
+<% items = [] %>
+<% build_items.each do |key,value| %>
+    <% temp = {} %>
+    <% temp[value] = item_data[value] %>    
+    <% items << temp %>
+<% end %>
+<div>
+    <div>
+        <%= champion_info["name"] %>
+    </div>
+    <div>
+        <%= image_tag("champion/#{champion_info["image"]["full"]}") %>
+    </div>
+</div>
+<%= item_table(items) %>
+
+<%= champion_stats_table(champion_info["stats"],items) %>
+
+<%= link_to 'Delete', build_path(@build), method: :delete %> 
