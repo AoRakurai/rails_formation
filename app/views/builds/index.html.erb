@@ -1,0 +1,5 @@
+<%= link_to("New Build", new_build_path) %>
+
+<% for build in @builds %>
+    <%= link_to build.champion, build_path(build) %>
+<% end %>

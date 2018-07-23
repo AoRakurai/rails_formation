@@ -1,0 +1,58 @@
+<%= champion_select %>
+
+<% for i in 0..5 do %>
+    <%= item_select(i) %>
+<% end %>
+
+<% data = items_data %>
+<% items = [] %>
+<% for item in data do %>
+    <% temp = {} %>
+    <% temp[item[0]] = data[item[0]] %>
+    <% items << temp %>
+    <% if items.length >= 6 then %>
+        <% break %>
+    <% end %>
+<% end %>
+
+<%= item_table(items) %>
+
+<%= submit_build %>
+
+<form id="submit_form" method="post" action="../builds">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+</form>
+
+<script> 
+    function item_select_changed(item)
+    {                   
+        var item_id = document.getElementById("item_select_"+item).value;
+        var item_image = document.getElementById("item_image_"+item);
+        item_image.src = "/assets/item/"+item_id+".png";
+    }
+
+    function submit()
+    {     
+        var params = {
+            champion: document.getElementById("champion_select").value    
+        }
+        for(i = 0; i < 6; i++){
+            params["item"+i.toString()] = document.getElementById("item_select_"+i.toString()).value;
+        }
+        var form = document.getElementById("submit_form");
+        
+        for(var key in params) {
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        console.log(form.submit());
+        form.submit();
+    }
+</script>
